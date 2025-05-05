@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_04_112207) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_05_094349) do
+  create_table "items", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "rarity"
+    t.integer "stack_limit"
+    t.integer "item_type_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_type_id"], name: "index_items_on_item_type_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "name"
@@ -28,5 +39,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_112207) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "items", "item_types"
   add_foreign_key "players", "users"
 end
