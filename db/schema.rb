@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_05_095115) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_05_151445) do
+  create_table "containers", force: :cascade do |t|
+    t.integer "player_id", null: false
+    t.string "name"
+    t.boolean "portable"
+    t.boolean "equippable_only"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["player_id"], name: "index_containers_on_player_id"
+  end
+
   create_table "item_types", force: :cascade do |t|
     t.string "name"
     t.string "key"
@@ -47,6 +57,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_05_095115) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "containers", "players"
   add_foreign_key "items", "item_types"
   add_foreign_key "players", "users"
 end
