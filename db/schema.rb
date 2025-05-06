@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_05_151445) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_06_164106) do
   create_table "containers", force: :cascade do |t|
     t.integer "player_id", null: false
     t.string "name"
@@ -19,6 +19,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_05_151445) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["player_id"], name: "index_containers_on_player_id"
+  end
+
+  create_table "item_stocks", force: :cascade do |t|
+    t.integer "item_id", null: false
+    t.integer "container_id", null: false
+    t.boolean "used", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["container_id"], name: "index_item_stocks_on_container_id"
+    t.index ["item_id"], name: "index_item_stocks_on_item_id"
   end
 
   create_table "item_types", force: :cascade do |t|
@@ -58,6 +68,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_05_151445) do
   end
 
   add_foreign_key "containers", "players"
+  add_foreign_key "item_stocks", "containers"
+  add_foreign_key "item_stocks", "items"
   add_foreign_key "items", "item_types"
   add_foreign_key "players", "users"
 end
